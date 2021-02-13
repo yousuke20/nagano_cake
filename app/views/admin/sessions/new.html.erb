@@ -1,6 +1,6 @@
 <div class="container">
   <div class="row">
-    <h2>管理者ログイン</h2>
+    <h1>管理者ログイン</h2>
   </div>
   <div class="row">
     <div class="w-50 mx-auto">
@@ -12,13 +12,13 @@
         </div>
       </div>
       <div class="form-group row">
-        <label class="col-sm-3"><%= f.label :パスワード %></label>
-        <div class="col-sm-9">
+        <label class="col-sm-4"><%= f.label :パスワード %></label>
+        <div class="col-sm-8">
           <%= f.password_field :password, autocomplete: "current-password", class: "form-control" %>
         </div>
       </div>
       <div class="form-group text-center">
-        <%= f.submit "ログイン", class: "btn btn-primary mb-2" %>
+        <%= f.submit "ログイン", class: "btn btn-primary px-5" %>
       </div>
     <% end %>
     </div>

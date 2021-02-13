@@ -1,0 +1,18 @@
+<div class="container">
+  <div class="row mb-4">
+    <h1>ジャンル編集</h1>
+  </div>
+  <div class="row mb-4">
+    <%= form_with model: @genre, url: admin_genre_path, local: true do |f| %>
+    <div class="form-group row">
+        <label class="col-sm-3">ジャンル名</label>
+        <div class="col-sm-6">
+          <%= f.text_field :name, autofocus: true, class: "form-control", placeholder: "ジャンル名" %>
+        </div>
+        <div class="col-sm-3">
+          <%= f.submit "新規登録", class: "btn btn-success" %>
+        </div>
+    </div>
+    <% end %>
+  </div>
+</div>  

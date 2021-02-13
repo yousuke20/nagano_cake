@@ -1,0 +1,68 @@
+<div class="container">
+  <div class="w-75">
+    <div class="col mb-4">
+      <h1>
+        <%= @customer.last_name %><%= @customer.first_name %>さんの会員詳細
+      </h1>
+    </div>
+    <div class="col mb-4">
+      <div class="row">
+        <label class="col-sm-3">会員ID</label>
+        <div class="col-sm-9">
+          <%= @customer.id %>
+        </div>
+      </div>
+      <div class="row">
+        <label class="col-sm-3">氏名</label>
+        <div class="col-sm-9">
+          <%= @customer.last_name %> <%= @customer.first_name %>
+        </div>
+      </div>
+      <div class="row">
+        <label class="col-sm-3">フリガナ</label>
+        <div class="col-sm-9">
+          <%= @customer.last_name_kana %> <%= @customer.first_name_kana %>
+        </div>
+      </div>
+      <div class="row">
+        <label class="col-sm-3">郵便番号</label>
+        <div class="col-sm-9">
+          <%= @customer.postal_code %>
+        </div>
+      </div>
+      <div class="row">
+        <label class="col-sm-3">住所</label>
+        <div class="col-sm-9">
+          <%= @customer.address %>
+        </div>
+      </div>
+      <div class="row">
+        <label class="col-sm-3">電話番号</label>
+        <div class="col-sm-9">
+          <%= @customer.telephone_number %>
+        </div>
+      </div>
+      <div class="row">
+        <label class="col-sm-3">メールアドレス</label>
+        <div class="col-sm-9">
+          <%= @customer.email %>
+        </div>
+      </div>
+      <div class="row">
+        <label class="col-sm-3">会員ステータス</label>
+        <div class="col-sm-9">
+          <%= @customer.is_active %>
+        </div>
+      </div>
+    </div>
+    <div class="col text-center">
+      <%= link_to edit_admin_customer_path(@customer) do %>
+        <span class="btn btn-success mb-2 mr-5">編集する</span>
+      <% end %>
+      <!--該当会員のみの注文履歴一覧、該当会員のみの注文履歴へ-->
+      <%= link_to  do %>
+        <span class="btn btn-primary mb-2 ml-5">注文履歴一覧を見る</span>
+      <% end %>
+    </div>
+  </div>
+</div>

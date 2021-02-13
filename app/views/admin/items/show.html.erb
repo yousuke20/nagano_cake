@@ -1,0 +1,49 @@
+<div class="container">
+  <div class="row mb-4">
+    <h1>商品詳細</h1>
+  </div>
+  <div class="row mb-4 mx-auto w-75">
+    <div class="col-sm">
+      <%= attachment_image_tag @item, :image, :fill, 220, 250 %>
+    </div>
+    <div class="col-sm">
+      <div class="row">
+        <label class="col-sm-6">商品名</label>   
+        <div class="col-sm-6">
+          <%= @item.name %>
+        </div>
+      </div>
+      <div class="row">
+        <label class="col-sm-6">商品説明</label>   
+        <div class="col-sm-6">
+          <%= @item.introduction %>
+        </div>
+      </div>
+      <div class="row">
+        <label class="col-sm-6">ジャンル</label>   
+        <div class="col-sm-6">
+          <%= @item.genre_id %>
+        </div>
+      </div>
+      <div class="row">
+        <label class="col-sm-6">税込価格<br>(税抜価格)</label>   
+        <div class="col-sm-6">
+          <%= (1.1 * @item.price).round(0) %>(<%= @item.price %>)  円
+        </div>
+      </div>
+      <div class="row">
+        <label class="col-sm-6">販売ステータス</label>   
+        <div class="col-sm-6">
+          <%= @item.is_active %>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row text-center">
+    <div class="col">
+      <%= link_to edit_admin_item_path(@item) do %>
+        <span class="btn btn-success mb-2">編集する</span>
+      <% end %>
+    </div>
+  </div>
+</div>

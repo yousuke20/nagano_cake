@@ -16,3 +16,14 @@
 @import "bootstrap";
 @import 'font-awesome-sprockets';
 @import 'font-awesome';
+
+// ヘッダー部 各ボタンの横間隔調整
+.nav-item {
+ margin: 0 10px;
+}
+
+// フッター部 空白調整
+.footer {
+  width: 100%;
+  height: 100px;
+}

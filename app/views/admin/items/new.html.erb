@@ -1,0 +1,60 @@
+<div class="container">
+  <div class="row mb-4">
+    <h1>商品新規登録</h1>
+  </div>
+  <div class="row mb-4">
+    <div class="mx-auto">
+    <%= form_with model: @item, url: admin_items_path, local: true do |f| %>
+      <div class="form-group row">
+        <label class="col-sm-3">商品画像</label>
+        <div class="col-sm-9">
+          <%= f.attachment_field :image %> 
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-sm-3">商品名</label>
+        <div class="col-sm-9">
+          <%= f.text_field :name, class: "form-control", placeholder: "商品名" %>
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-sm-3">商品説明</label>
+        <div class="col-sm-9">
+          <%= f.text_area :introduction, class: "form-control", rows: "3", placeholder: "ここに説明文を記述します" %>
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-sm-3">ジャンル</label>
+        <div class="col-sm-9">
+          <%= f.select :genre, Item.genre_ids.keys.to_a, {}, class: "form-control" %>
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-sm-3">税抜価格</label>
+        <div class="col-sm-8">
+          <%= f.text_field :price, class: "form-control", placeholder: "1000" %>
+        </div>
+        <div class="col-sm-1">円</div>
+      </div>
+      <div class="form-group row">
+        <label class="col">販売ステータス</label>
+        <div class="col">
+          <div class="form-check form-check-inline">
+            <label>
+              <%= f.radio_button :is_active, :販売中, class: "form-check-input"  %>販売中
+            </label>
+          </div>
+          <div class="form-check form-check-inline">
+            <label>
+              <%= f.radio_button :is_active, :販売停止中, class: "form-check-input" %>販売停止中
+            </lavel>
+          </div>  
+        </div>
+      </div>
+      <div class="form-group text-center">
+        <%= f.submit "新規登録", class: "btn btn-success mb-2" %>
+      </div>
+    <% end %>
+    </div>
+  </div>†
+</div>
