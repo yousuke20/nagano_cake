@@ -10,9 +10,19 @@
       <div class="row mb-4">
         <p><%= @item.introduction %></p>
       </div>
-      <div class="row">
+      <div class="row mb-4">
         ¥ <h5><%= (1.1 * @item.price).round(0) %>(税込)</>
       </div>
+      <%= form_with model: @cart_item, url: cart_items_path, local: true do |f| %>
+        <div class="row">
+          <div class="col-sm-6">
+            <%= f.select :amount, [['1個', 1],['2個', 2],['3個', 3],['4個', 4],['5個', 5]], {include_blank: '個数選択'}, {class: "form-control", required: true } %>
+          </div>
+          <div class="col-sm-6">
+            <%= f.submit 'カートに入れる', class: 'btn btn-success mb-2' %>
+          </div>
+        </div>
+      <% end %>  
     </div>
   </div>
 </div>

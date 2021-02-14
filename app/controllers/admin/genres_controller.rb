@@ -9,7 +9,6 @@ class Admin::GenresController < ApplicationController
 # 新規登録ジャンルデータの保存
   def create
     @genre = Genre.new(genre_params)
-    @genre.id = Item.genre_id
     @genre.save
     redirect_to admin_genres_path
   end

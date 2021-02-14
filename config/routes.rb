@@ -10,8 +10,12 @@ Rails.application.routes.draw do
   
   scope module: :public do
     root to: 'homes#top'
+    
     get '/about' => 'homes#about'
+    delete '/cart_items/all' => 'cart_items#all_destroy'
+    
     resources :items, only: [:index, :show]
+    resources :cart_items, only: [:index, :create, :update, :destroy]
   end
   
   # 管理者側のパス
