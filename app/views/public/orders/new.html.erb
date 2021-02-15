@@ -1,0 +1,61 @@
+<div class="container">
+  <h1 class="row mb-4">
+    <strong>注文情報入力</strong>
+  </h1>
+  <%= form_with model: @order, url: orders_confirm_path(@order), local: true do |f| %>  
+    <div class="col mb-4">  
+      <h3>支払い方法</h3>
+      <div class="form-check">
+        <%= f.radio_button :making_status, 1, class: "form-check-input" %>
+        <label class="form-check-label">クレジットカード</label>
+      </div>
+      <div class="form-check">
+        <%= f.radio_button :making_status, 2, class: "form-check-input" %>
+        <label class="form-check-label">銀行振込</label>    
+      </div>
+    </div>
+    <div class="col-sm-10">
+      <h3>お届け先</h3>
+        <div class="form-check mb-3">
+        <%= f.radio_button :address, 1 , class: "form-check-input "%>
+        <label class="form-check-label">ご自身の住所</label>
+        <div>
+          〒<%= current_customer.postal_code %> <%= current_customer.address %><br>
+          <%= current_customer.last_name %><%= current_customer.first_name %>
+        </div>
+      </div>
+      <div class="form-check mb-3">
+        <%= f.radio_button :address, 2, class: "form-check-input" %>
+        <label class="form-check-label">登録済住所から選択</label>
+        <%= f.collection_select(:address, @addresses, :id, :fulladdress, {}) %>
+      </div>
+      <div class="form-check mb-3">
+        <%= f.radio_button :address, 3, class: "form-check-input" %>
+        <label class="form-check-label">新しいお届け先</label>
+      </div>
+      <div class="col">
+        <div class="row">
+          <label class="col-sm-4 col-form-label"><%= f.label :郵便番号（ハイフンなし） %></label>
+          <div class="col-sm-4">
+            <%= f.text_field :postal_code, class: "form-control", placeholder: "00000000" %>
+          </div>
+        </div>
+        <div class="row">
+          <label class="col-sm-4 col-form-label"><%= f.label :住所 %></label>
+          <div class="col-sm-8">
+            <%= f.text_field :address, class: "form-control", placeholder: "東京都渋谷区代々木神園町0-0" %>
+          </div>
+        </div>
+        <div class="row">
+          <label class="col-sm-4 col-form-label"><%= f.label :宛名 %></label>
+          <div class="col-sm-4">
+            <%= f.text_field :name, class: "form-control", placeholder: "令和道子" %>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row mt-3">
+      <%= link_to "確認画面へ進む", orders_confirm_path(@order), class: "btn btn-primary mx-auto" %>
+    </div>
+  <% end %>  
+</div>

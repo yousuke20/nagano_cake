@@ -10,12 +10,18 @@ Rails.application.routes.draw do
   
   scope module: :public do
     root to: 'homes#top'
-    
     get '/about' => 'homes#about'
+    
+    # カート内商品全削除
     delete '/cart_items/all' => 'cart_items#all_destroy'
+    
+    # 注文情報確認画面、注文完了画面
+    post '/orders/confirm' => 'orders#confirm'
+    get '/orders/complete' => 'orders#complete'
     
     resources :items, only: [:index, :show]
     resources :cart_items, only: [:index, :create, :update, :destroy]
+    resources :orders, only: [:index, :create, :new, :show]
   end
   
   # 管理者側のパス
