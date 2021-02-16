@@ -1,10 +1,10 @@
 <div class="container">
-  <div class="row">
-    <strong>注文情報確認<strong>
+  <div class="row mb-4">
+    <h1><strong>注文情報確認<strong></h1>
   </div>
-  <div class="row">
-    <div class="col-sm-6">
-      <table class="table table-bordered">
+  <div class="row mb-4">
+    <div class="col-6">
+      <table class="table table-bordered table-sm">
         <thead class="thead-light">
           <tr>
             <th>商品名</th>
@@ -13,9 +13,57 @@
             <th>小計</th>
           </tr>
         </thead>
-        <tbody></tbody>
+        <tbody>
+          <% current_customer.cart_items.each do |cart| %>
+          <tr>
+            <th>
+              <%= cart.item.name %>
+            </th>
+            <th>
+              <%= ((cart.item.price * 1.1).floor).to_s(:delimited) %>
+            </th>
+            <th>
+              <%= cart.amount %>
+            </th>
+            <th>
+              <%= ((cart.item.price * 1.1).floor * cart.amount).to_s(:delimited) %>
+            </th>
+          </tr>
+          <% end %>
+        </tbody>
       </table>
     </div>
-    <div class="col-sm-3"></div>
+    <div class="col-3 offset-2">
+      <table class="table table-bordered table-sm">
+        <tbody>
+          <tr>
+            <td class="table-secondary">送料</td>
+            <td>800</td>
+          </tr>
+          <tr>
+            <td class="table-secondary">商品合計</td>
+            <td><%= @total_price.to_s(:delimited) %></td>
+          </tr>
+          <tr>
+            <td class="table-secondary">請求合計</td>
+            <td><%= (@total_price + 800).to_s(:delimited) %></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col">
+      <div class="row mb-3">
+        <strong class="px-3 mr-3">お支払い方法</strong>
+        <p><%= session[:order] %></p>
+      </div>
+      <div class="row mb-3">
+        <strong class="px-3 mr-3">お届け先</strong>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <%= link_to "注文を確定する", orders_complete_path, class: "btn btn-success mx-auto" %>
   </div>
 </div>

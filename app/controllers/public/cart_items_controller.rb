@@ -3,9 +3,7 @@ class Public::CartItemsController < ApplicationController
 
    def index
      @cart_items = current_customer.cart_items
-     
-     # カート小計の合計金額を算出
-     @total_price = @cart_items.sum{|cart_item|(cart_item.item.price * cart_item.amount * 1.1)}
+     @total_price = calculate(current_customer)
    end
 
    def create
@@ -25,13 +23,13 @@ class Public::CartItemsController < ApplicationController
    def destroy
     @cart_item = CartItem.find(params[:id])
     @cart_item.destroy
-    redirect_to cart_items
+    redirect_to cart_items_path
    end
 
    def all_destroy
-    @cart_item_all = CartItem.all
+    @cart_item_all = current_customer.cart_items.all
     @cart_item_all.destroy
-    redirect_to cart_items
+    redirect_to cart_items_path
    end
 
   # カート内商品のストロングパラメータ
@@ -39,5 +37,13 @@ class Public::CartItemsController < ApplicationController
 
    def cart_item_params
      params.permit(:amount, :item_id, :customer_id)
+   end
+   
+   def calculate(customer)
+     total_price = 0
+     customer.cart_items.each do |cart_item|
+       total_price += cart_item.amount * cart_item.item.price
+     end
+     return (total_price * 1.1).floor
    end
 end

@@ -1,0 +1,61 @@
+<div class="container">
+  <div class="row mb-4">
+    <h1>会員情報編集</h1>
+  </div>
+  <div class="row mb-4">
+    <div class="w-75 mx-auto">
+      <%= form_with model: @customer, url: customer_path(@customer), local: true do |f| %>
+      <div class="row">
+        <label class="col-sm-4 col-form-label"><%= f.label :氏名 %></label>
+        <div class="col-sm-4">
+          <%= f.text_field :last_name, class: "form-control", placeholder: "山田" %>
+        </div>
+        <div class="col-sm-4">
+          <%= f.text_field :first_name, class: "form-control", placeholder: "花子" %>
+        </div>
+      </div>
+      <div class="row">
+        <label class="col-sm-4 col-form-label"><%= f.label :フリガナ %></label>
+        <div class="col-sm-4">
+          <%= f.text_field :last_name_kana, class: "form-control", placeholder: "ヤマダ" %>
+        </div>
+        <div class="col-sm-4">
+          <%= f.text_field :first_name_kana, class: "form-control", placeholder: "ハナコ" %>
+        </div>
+      </div>
+      <div class="row">
+        <label class="col-sm-4 col-form-label"><%= f.label :郵便番号 %></label>
+        <div class="col-sm-4">
+          <%= f.text_field :postal_code, class: "form-control", placeholder: "1500041" %>
+        </div>
+      </div>
+       <div class="row">
+        <label class="col-sm-4 col-form-label"><%= f.label :住所 %></label>
+        <div class="col-sm-8">
+          <%= f.text_field :address, class: "form-control", placeholder: "東京都渋⾕区神南1丁目19-11 パークウェースクエア2 4階" %>
+        </div>
+      </div>
+      <div class="row">
+        <label class="col-sm-4 col-form-label"><%= f.label :電話番号 %></label>
+        <div class="col-sm-4">
+          <%= f.text_field :telephone_number, class: "form-control", placeholder: "0368694700" %>
+        </div>
+      </div>
+      <div class="row">
+        <label class="col-sm-4 col-form-label"><%= f.label :メールアドレス %></label>
+        <div class="col-sm-4">
+          <%= f.text_field :email, autofocus: true, autocomplete: "email", class: "form-control", placeholder: "hoge@example.com" %>
+        </div>
+      </div>
+      <div class="row mt-4 text-center">
+        <div class="col mr-4">
+          <%= f.submit "編集内容を保存", class: "btn btn-success px-5" %>
+        </div>
+        <% end %>
+        <div class="col ml-4">
+          <%= link_to "退会する", customers_confirm_path, class: "btn btn-danger" %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
