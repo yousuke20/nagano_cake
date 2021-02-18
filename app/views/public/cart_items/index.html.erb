@@ -48,11 +48,11 @@
     <div class="col">
       <%= link_to "買い物を続ける", root_path, class: "btn btn-primary" %>
     </div>
-    <div class="col pull-right">
+    <div class="col-4 pull-right">
       <table class="table table-bordered">
         <tr>
-          <td class="col-xs-2 table-secondary"><strong>合計金額</strong></td>
-          <td class="col-xs-2">
+          <td class="table-secondary"><strong>合計金額</strong></td>
+          <td>
             <%= @total_price.to_s(:delimited) %>
           </td>
         </tr>

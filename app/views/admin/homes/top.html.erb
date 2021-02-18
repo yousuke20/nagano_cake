@@ -20,7 +20,7 @@
               <%= link_to admin_order_path(order) do %>
                 <%= order.created_at %>
               <% end %>
-              </td>
+            </td>
             <td><%= order.customer.last_name + order.customer.first_name %></td>
             <td><%= order.order_details.sum(:amount) %></td>
             <td><%= order.status %></td>
