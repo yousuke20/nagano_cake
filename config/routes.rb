@@ -12,23 +12,25 @@ Rails.application.routes.draw do
     root to: 'homes#top'
     get '/about' => 'homes#about'
     
-    delete '/cart_items/all' => 'cart_items#all_destroy' # カート内商品全削除
+    delete '/cart_items/all' => 'cart_items#destroy_all' # カート内商品全削除
     
     # 注文情報確認画面、注文完了画面
-    get '/orders/confirm' => 'orders#confirm', as: 'orders_confirm'
+    get '/orders/confirm' => 'orders#confirm'
+    post '/orders/confirm' => 'orders#confirm'
     get '/orders/complete' => 'orders#complete'
     
     # 情報入力画面での配送先登録用のアクション
     post '/orders/create_address' => 'orders#create_address' 
     
     # 顧客の退会確認画面、退会処理（ステータスの更新）
-    post '/customers/confirm' => 'customers#confirm'
-    patch '/customers/withdrawal' => 'customers#withdrawal'
+    get '/customers/withdrawal' => 'customers#withdrawal'
+    patch '/customers/withdrawal' => 'customers#destroy'
     
     resources :items, only: [:index, :show]
     resources :cart_items, only: [:index, :create, :update, :destroy]
     resources :orders, only: [:index, :create, :new, :show]
     resources :customers, only: [:show, :edit, :update]
+    resources :addresses, only: [:index, :create, :edit, :update, :destroy]
   end
   
   # 管理者側のパス

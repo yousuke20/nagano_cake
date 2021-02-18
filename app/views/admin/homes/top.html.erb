@@ -14,28 +14,21 @@
           </tr>
         </thead>
         <tbody>
-          <% @order_all.each do |order_all|%>
-            <tr>
-              <td>
-                <%= link_to admin_order_path(order_all) do %>
-                  <%= order_all.created_at %>
-                <% end %>  
+        <% @orders.each do |order| %>
+          <tr>
+            <td>
+              <%= link_to admin_order_path(order) do %>
+                <%= order.created_at %>
+              <% end %>
               </td>
-              <td>
-                <%= order_all.customer.name %>
-              </td>
-              <td>
-                <%= order_all.order_details.amount %>
-              </td>
-              <td>
-                <%= order_all.status %>
-              </td>
-            </tr>
-          <% end %>
-         
+            <td><%= order.customer.last_name + order.customer.first_name %></td>
+            <td><%= order.order_details.sum(:amount) %></td>
+            <td><%= order.status %></td>
+          </tr>
+        <% end %>
         </tbody>
       </table>
-      <%= paginate @order_all %>
+      <%= paginate @orders %>
     </div>
   </div>
 </div>

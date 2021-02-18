@@ -11,57 +11,62 @@ class Public::OrdersController < ApplicationController
    end
    
    def new
-     @addresses = current_customer.addresses
      @address = Address.new
      @order = Order.new
    end
    
-   def create
-      # 注文データの一時保存
-      session[:order] = Order.new
-      @customer = current_customer
-      @cart_items = current_customer.cart_items
-      
-      session[:order][:shipping_cost] = 800
-      session[:order][:payment] = calculate(@customer)
-      session[:order][:status] = 1
-      session[:order][:customer_id] = @customer.id
-      
-      session[:order][:payment_method] = params[:payment_method] # ラジオボタンで選択した支払い方法の、enum番号を渡す
-      
-      @branch = params[:address_path].to_i # ラジオボタンで選択した配送先によって、条件分岐
-      
-      if @branch == 1  # ご自身の住所を選択した場合
-        session[:order][:postal_code] = @customer.postal_code
-        session[:order][:name] = @customer.last_name + @customer.first_name
-        session[:order][:address] = @customer.address
-        
-      elsif @branch == 2   # 登録済住所を選択した場合
-        @address = Address.find(params[:address])
-        session[:order][:postal_code] = @address.postal_code
-        session[:order][:name] = @address.name
-        session[:order][:address] = @address.address
-      end
-      # お届け先入力に不備があった場合、情報入力画面へリダイレクト
-      if session[:order][:postal_code].presence && session[:order][:name].presence && session[:order][:address].presence
-        redirect_to new_order_path
-      else  
-        redirect_to orders_confirm_path
-      end
-    
+   # 注文確認ページ、注文情報入力ページで入力したお支払い方法、お届け先の一時保持（session）
+   def confirm
+     @order = current_customer.orders
+     @total_price = calculate(current_customer)
+     
+     session[:payment_method] = params[:payment_method]
+     
+     if params[:add] == "my_address"
+       session[:address] = "〒" + current_customer.postal_code + current_customer.address + current_customer.last_name + current_customer.first_name
+     elsif params[:add] == "choise_address"
+       session[:address] = "〒" + params[:address]
+     else
+       render :new
+     end
    end
    
+   def create
+    # 注文内容の保存
+     @order = Order.new
+     @order.customer_id = current_customer.id
+     @order.address = session[:address]
+     @order.postal_code = nil
+     @order.name = nil
+     @order.shipping_cost = 800
+     @order.payment_method = session[:payment_method]
+     @order.payment = calculate(current_customer)
+     @order.status = 1
+     @order.save
+    # 注文商品ごとの詳細の保存
+     current_customer.cart_items.each do |cart|
+       @order_detail = OrderDetail.new
+       @order_detail.order_id = @order.id
+       @order_detail.item_id = cart.item.id
+       @order_detail.price = cart.item.price
+       @order_detail.amount = cart.amount
+       @order_detail.making_status = 3
+       @order_detail.save
+     end
+    # 現ユーザーのカート内データ、および支払い方法＆お届け先データの削除
+     current_customer.cart_items.destroy_all
+     session.delete(:payment_method)
+     session.delete(:address)
+     redirect_to orders_complete_path
+   end 
+    
+       
 #   情報入力画面にて新規配送先の登録
    def create_address
      @address = Address.new(create_address_params)
      @address.customer_id = current_customer.id
      @address.save
      redirect_to new_order_path
-   end
-   
-   def confirm
-    @order = current_customer.orders
-    @total_price = calculate(current_customer)
    end
    
    def complete
@@ -84,8 +89,7 @@ class Public::OrdersController < ApplicationController
   end
   
   def order_params
-    params.require(:order).permit(
-      :customer_id,
+    params.permit(
       :address,
       :name,
       :postal_code,

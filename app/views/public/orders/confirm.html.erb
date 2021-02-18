@@ -54,16 +54,17 @@
   </div>
   <div class="row">
     <div class="col">
-      <div class="row mb-3">
+      <div class="row mb-4">
         <strong class="px-3 mr-3">お支払い方法</strong>
-        <p><%= session[:order] %></p>
+        <%= session[:payment_method] %>
       </div>
-      <div class="row mb-3">
+      <div class="row mb-4">
         <strong class="px-3 mr-3">お届け先</strong>
+        <%= session[:address] %>
       </div>
     </div>
   </div>
   <div class="row">
-    <%= link_to "注文を確定する", orders_complete_path, class: "btn btn-success mx-auto" %>
+    <%= link_to "注文を確定する", orders_path, method: :post, class: "btn btn-success mx-auto" %>
   </div>
 </div>

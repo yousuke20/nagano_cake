@@ -26,9 +26,8 @@ class Public::CartItemsController < ApplicationController
     redirect_to cart_items_path
    end
 
-   def all_destroy
-    @cart_item_all = current_customer.cart_items.all
-    @cart_item_all.destroy
+   def destroy_all
+    current_customer.cart_items.destroy
     redirect_to cart_items_path
    end
 
@@ -42,7 +41,7 @@ class Public::CartItemsController < ApplicationController
    def calculate(customer)
      total_price = 0
      customer.cart_items.each do |cart_item|
-       total_price += cart_item.amount * cart_item.item.price
+       total_price += (cart_item.amount).to_i * (cart_item.item.price) 
      end
      return (total_price * 1.1).floor
    end
