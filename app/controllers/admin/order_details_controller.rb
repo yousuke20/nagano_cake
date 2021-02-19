@@ -4,6 +4,7 @@ class Admin::OrderDetailsController < ApplicationController
   def update
     @detail = OrderDetail.find(params[:id])
     @detail.update(order_detail_params)
+    flash[:success] = '製作ステータスを更新しました！'
     redirect_to admin_order_path(@detail.order.id)
   end
   

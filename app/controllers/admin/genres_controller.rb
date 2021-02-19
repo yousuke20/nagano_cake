@@ -9,8 +9,13 @@ class Admin::GenresController < ApplicationController
 # 新規登録ジャンルデータの保存
   def create
     @genre = Genre.new(genre_params)
-    @genre.save
-    redirect_to admin_genres_path
+    if @genre.save
+      flash[:success] = '編集内容を保存しました！'
+      redirect_to admin_genres_path
+    else
+      flash[:danger] = '内容に不備があります！'
+      render :index
+    end  
   end
 
   def edit
@@ -19,8 +24,13 @@ class Admin::GenresController < ApplicationController
 
   def update
     @genre = Genre.find(params[:id])
-    @genre.update(genre_params)
-    redirect_to admin_genres_path
+    if @genre.update(genre_params)
+      flash[:success] = '編集内容を保存しました！'
+      redirect_to admin_genres_path
+    else
+      flash[:danger] = '内容に不備があります！'
+      render :edit
+    end  
   end
 
   # ジャンルデータのストロングパラメータ

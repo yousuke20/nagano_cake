@@ -4,7 +4,7 @@
   </div>
   <div class="row mb-4">
     <div class="w-75 mx-auto">
-      <%= form_with model: @customer, url: customer_registration_path, id: 'new_user', local: true do |f| %>
+    <%= form_with model: @customer, url: customer_registration_path, method: :post, id: 'new_user', class: 'new_user', local: true do |f| %>
       <div class="row">
         <label class="col-sm-4 col-form-label"><%= f.label :名前 %></label>
         <div class="col-sm-4">
@@ -64,7 +64,7 @@
           <%= f.submit "新規登録", class: "btn btn-success px-5" %>
         </div>
       </div>
-      <% end %>
+    <% end %>
     </div>
   </div>
   <div class="row mb-4">

@@ -11,19 +11,25 @@ class Public::CustomersController < ApplicationController
    
    def update
      @customer = Customer.find(params[:id])
-     @customer.update(customer_params)
-     redirect_to customer_path(current_customer)
+     if @customer.update(customer_params)
+       flash[:success] = '編集内容を保存しました！'
+       redirect_to customer_path(current_customer)
+     else
+       flash[:danger] = '内容に不備があります！'
+       render :edit
+     end     
    end
    
    def withdrawal
    end
    
-   # ユーザーの退会処理（論理削除）、物理削除ではないため、pacthを用いてupdateする
+   # ユーザーの退会処理（論理削除） 物理削除ではないため、pacthを用いてupdateする
    def destroy
    #  is_activeを2にし、「有効」から「退会」へ変える
      current_customer.update(is_active: 2)
-   # ログアウトさせる
+   # ログアウトさせ、sessionデータをリセットする
      reset_session
+     flash[:success] = '退会処理が完了しました！'
      redirect_to root_path
    end
    

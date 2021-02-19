@@ -73,10 +73,19 @@
           </div>
         </div>
       </nav>
+      <!--flashによるメッセージ表示-->
+      <% flash.each do |key, msg| %>
+        <p class="alert alert-<%= key %>">
+          <%= msg.html_safe %>
+        </p>
+      <% end %>
+      <!----------------------------->
     </header>
+    
     <main class="mt-5 mb-auto">
       <%= yield %>
     </main>
+    
     <footer class="shadow-sm pt-4">
       <div class="footer border-top"></div>
     </footer>

@@ -7,27 +7,32 @@ class Public::CartItemsController < ApplicationController
    end
 
    def create
-     @cart_item = CartItem.new(cart_item_params)
+     @cart_item = CartItem.new
      @cart_item.customer_id = current_customer.id
-     @cart_item.item_id = params[:item_id]
+     @cart_item.item_id = params[:item_id].to_i
+     @cart_item.amount = params[:amount].to_i
      @cart_item.save
+     flash[:success] = '選択した商品をカートに入れました！<br>「個数選択」より、数量を設定してください'
      redirect_to cart_items_path
    end
 
    def update
      @cart_item = CartItem.find(params[:id])
      @cart_item.update(cart_item_params)
+     flash[:success] = '数量を変更しました！'
      redirect_to cart_items_path
    end
 
    def destroy
     @cart_item = CartItem.find(params[:id])
     @cart_item.destroy
+    flash[:success] = '選択した商品をカートから削除しました！'
     redirect_to cart_items_path
    end
 
    def destroy_all
     current_customer.cart_items.destroy_all
+    flash[:success] = 'カート内商品を全て削除しました！'
     redirect_to cart_items_path
    end
 

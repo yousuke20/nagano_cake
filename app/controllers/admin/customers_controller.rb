@@ -15,8 +15,13 @@ class Admin::CustomersController < ApplicationController
   
   def update
     @customer = Customer.find(params[:id])
-    @customer.update(customer_params)
-    redirect_to admin_customer_path()
+    if @customer.update(customer_params)
+      flash[:success] = '会員情報の更新に成功しました！'
+      redirect_to admin_customer_path(@customer)
+    else
+      flash[:danger] = '内容に不備があります！'
+      render :edit
+    end  
   end
   
   # 会員情報の更新ストロングパラメータ

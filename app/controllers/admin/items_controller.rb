@@ -7,14 +7,18 @@ class Admin::ItemsController < ApplicationController
   
   def new
     @item = Item.new
-    @genres = Genre.all
   end
   
   # 商品データの保存
   def create
     @item = Item.new(item_params)
-    @item.save
-    redirect_to admin_item_path(@item)
+    if @item.save
+      flash[:success] = '商品データを保存しました！'
+      redirect_to admin_item_path(@item)
+    else
+      flash[:danger] = '内容に不備があります！'
+      render :new
+    end  
   end
   
   def show
@@ -28,8 +32,13 @@ class Admin::ItemsController < ApplicationController
   # 商品データの更新
   def update
     @item = Item.find(params[:id])
-    @item.update(item_params)
-    redirect_to admin_item_path(@item.id)
+    if @item.update(item_params)
+      flash[:success] = '編集内容を保存しました！'
+      redirect_to admin_item_path(@item.id)
+    else
+      flash[:danger] = "内容に不備があります！"
+      render :edit
+    end  
   end
   
   # 商品データのストロングパラメータ

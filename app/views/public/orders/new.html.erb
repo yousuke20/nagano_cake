@@ -4,39 +4,41 @@
   </h1>
   <%= form_tag(orders_confirm_path, method: :post) do %>    
     <div class="col mb-4">  
-        <div class="row">
-          <h3>支払い方法</h3>
-        </div>
-        <div class="form-check">
-          <%= radio_button_tag :payment_method, :クレジットカード, checked: "checked", class: "form-check-input" %>
-          <label class="form-check-label">クレジットカード</label>
-        </div>
-        <div class="form-check">
-          <%= radio_button_tag :payment_method, :銀行振込, class: "form-check-input" %>
-          <label class="form-check-label">銀行振込</label>    
-        </div>
+      <div class="row">
+        <h3>支払い方法</h3>
+      </div>
+      <div class="form-check">
+        <%= radio_button_tag :payment_method, :クレジットカード, class: "form-check-input" %>
+        <label class="form-check-label">クレジットカード</label>
+      </div>
+      <div class="form-check">
+        <%= radio_button_tag :payment_method, :銀行振込, class: "form-check-input" %>
+        <label class="form-check-label">銀行振込</label>    
+      </div>
     </div>
   
     <div class="col mb-5">
-        <h3>お届け先</h3>
-          <div class="form-check mb-3">
-          <%= radio_button_tag :add, "my_address", checked: "checked", class: "form-check-input "%>
-          <label class="form-check-label mr-4">ご自身の住所</label>
-          <div class="text-left"><% address = current_customer.postal_code + current_customer.address + current_customer.last_name + current_customer.first_name %>
-            〒 <%= address %></div>
-          </div>
-          <div class="form-check mb-3">
-            <%= radio_button_tag :add, "choise_address", class: "form-check-input" %>
-            <label class="form-check-label">登録済住所から選択</label>
-            <div class="text-left">
-              〒<%= select_tag :address, options_for_select(Address.all.map{|add| [add.postal_code + add.address + add.name]}), {include_blank: '配送先を選択'} %>
-            </div>  
-          </div>
-          <div class="row mt-3">
-            <%= submit_tag "確認画面へ進む", class: "btn btn-primary mx-auto" %>
-          </div>
+      <h3>お届け先</h3>
+      <div class="form-check mb-3">
+        <%= radio_button_tag :add, "my_address", class: "form-check-input "%>
+        <label class="form-check-label mr-4">ご自身の住所</label>
+        <div class="text-left">
+          <% address = current_customer.postal_code + current_customer.address + current_customer.last_name + current_customer.first_name %>
+          〒 <%= address %>
+        </div>
+      </div>
+      <div class="form-check mb-3">
+        <%= radio_button_tag :add, "choise_address", class: "form-check-input" %>
+        <label class="form-check-label">登録済住所から選択</label>
+        <div class="text-left">
+          〒<%= select_tag :address, options_for_select(Address.all.map{|add| [add.postal_code + add.address + add.name]}), {include_blank: '配送先を選択'} %>
+        </div>  
+      </div>
+      <div class="row mt-3">
+        <%= submit_tag "確認画面へ進む", class: "btn btn-primary mx-auto" %>
+      </div>
+    </div>  
   <% end %>  
-  </div>  
   <%= form_with model: @address, url: orders_create_address_path do |f| %>
     <div class="col">
       <h3>新たな配送先を登録する</h3>

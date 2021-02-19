@@ -1,29 +1,20 @@
 class ApplicationController < ActionController::Base
-  protect_from_forgery
+  add_flash_types = :success, :info, :warning, :danger
+  protect_from_forgery with: :exception
   
   before_action :configure_permitted_parameters, if: :devise_controller?
   
-  def after_sign_in_path_for(resource)
-    if resource == :admin
-      admin_root_path
-    else 
-      root_path
-    end
-  end
-  
-  def after_sign_up_path_for(resource)
-    if resource == :admin
-      admin_root_path
-    end
-  end
-  
+  # ログアウト後のパス設定
   def after_sign_out_path_for(resource)
     if resource == :admin
+      flash[:success] = 'ログアウトしました！'
       new_admin_session_path
-    else 
+    else
+      flash[:success] = 'ログアウトしました！'
       root_path
     end
   end
+  
   
   protected
   

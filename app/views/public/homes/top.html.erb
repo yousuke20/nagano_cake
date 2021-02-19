@@ -1,5 +1,5 @@
 <div class="container">
-  <div class="mx-auto w-50">
+  <div class="col mx-auto w-50">
     <div class="row py-3 border border-dark">
       <p>
         ようこそ、ながのCAKEへ！<br>
@@ -9,7 +9,7 @@
       </p>
     </div>
   </div>
-  <div class="mx-auto w-75">
+  <div class="col mx-auto w-75">
     <div class="row py-4">
       <h1>新着商品</h1>
     </div>
@@ -34,8 +34,8 @@
         <% end %>
       <% end %>
     </div>
-    <div class="row float-right">
-      <%= link_to "全ての商品を⾒る", items_path %>
-    </div>
+  </div>
+  <div class="col text-right">
+    <%= link_to "全ての商品を⾒る", items_path %>
   </div>
 </div>

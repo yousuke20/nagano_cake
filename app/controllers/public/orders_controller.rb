@@ -15,6 +15,17 @@ class Public::OrdersController < ApplicationController
      @order = Order.new
    end
    
+   # 注文情報入力画面にて新規配送先の登録
+   def create_address
+     @address = Address.new(create_address_params)
+     @address.customer_id = current_customer.id
+     if @address.save
+       flash[:success] = '新規配送先を保存しました<br>「登録済住所から選択」のセレクトボタン内にデータが格納されます。'
+       redirect_to new_order_path
+     else
+     end   
+   end
+   
    # 注文確認ページ、注文情報入力ページで入力したお支払い方法、お届け先の一時保持（session）
    def confirm
      @order = current_customer.orders
@@ -57,18 +68,10 @@ class Public::OrdersController < ApplicationController
      current_customer.cart_items.destroy_all
      session.delete(:payment_method)
      session.delete(:address)
+     flash[:success] = '注文処理が完了しました！'
      redirect_to orders_complete_path
    end 
     
-       
-#   情報入力画面にて新規配送先の登録
-   def create_address
-     @address = Address.new(create_address_params)
-     @address.customer_id = current_customer.id
-     @address.save
-     redirect_to new_order_path
-   end
-   
    def complete
      
    end

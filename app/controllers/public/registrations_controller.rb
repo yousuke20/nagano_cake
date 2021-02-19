@@ -59,4 +59,18 @@ class Public::RegistrationsController < Devise::RegistrationsController
   # def after_inactive_sign_up_path_for(resource)
   #   super(resource)
   # end
+  
+  # ログイン後、新規会員登録後のパス設定
+  private
+    def after_sign_in_path_for(resource)
+      case resource
+      when Admin
+        flash[:success] = 'ログインしました！'
+        admin_root_path
+      when Customer
+        flash[:success] = 'ログインしました！'
+        customer_path(current_customer)
+      end
+    end
+    
 end

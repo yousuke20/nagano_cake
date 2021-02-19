@@ -7,7 +7,7 @@
   </div>
   <div class="row mb-5">
     <div class="w-50 mx-auto">
-    <%= form_with model: @customer, url: admin_session_path, id: 'new_user', local: true do |f| %>
+    <%= form_with model: @customer, url: customer_session_path, method: :post, local: true do |f| %>
       <div class="row">
         <label class="col-sm-4 col-form-label"><%= f.label :メールアドレス %></label>
         <div class="col-sm-8">

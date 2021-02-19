@@ -9,8 +9,13 @@ class Public::AddressesController < ApplicationController
   def create
     @address = Address.new(add_params)
     @address.customer_id = current_customer.id
-    @address.save
-    redirect_to addresses_path
+    if @address.save
+      flash[:success] = '配送先登録が完了しました！'
+      redirect_to addresses_path
+    else
+      flash[:danger] = '内容に不備があります！'
+      render :index
+    end  
   end
   
   def edit
@@ -19,13 +24,19 @@ class Public::AddressesController < ApplicationController
   
   def update
     @address = Address.find(params[:id])
-    @address.update(add_params)
-    redirect_to addresses_path
+    if @address.update(add_params)
+      flash[:success] = '編集内容を保存しました！'
+      redirect_to addresses_path
+    else
+      flash[:danger] = '内容に不備があります！'
+      render :edit
+    end  
   end
   
   def destroy
     @address = Address.find(params[:id])
     @address.destroy
+    flash[:success] = '配送先登録を削除しました！'
     redirect_to addresses_path
   end
   # 宛名データのストロングパラメータ
