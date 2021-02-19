@@ -12,7 +12,7 @@ class Public::CartItemsController < ApplicationController
      @cart_item.item_id = params[:item_id].to_i
  
      @cart_item.save
-     flash[:success] = '選択した商品をカートに入れました！<br>「個数選択」より、数量を設定してください'
+     flash[:success] = '選択した商品をカートに入れました！<br>「数量」にて、商品の注文個数を変更することができます。'
      redirect_to cart_items_path
    end
 
