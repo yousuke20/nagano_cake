@@ -15,7 +15,7 @@
           <th class="col-xs-2">単価(税込)</th>
           <th class="col-xs-2">数量</th>
           <th class="col-xs-2">小計</th>
-          <th class="col-xs-2"></th>
+          <th class="col-xs-1"></th>
         </tr>
       </thead>
       <tbody>
@@ -25,18 +25,21 @@
               <%= cart_item.item.name %>
             </td>
             <td class="col-xs-2">
-              <%= ((cart_item.item.price * 1.1).floor).to_s(:delimited) %>
+              <%= ((cart_item.item.price * 1.1).floor).to_s(:delimited) %>円
             </td>
             <td class="col-xs-2">
+              <p class="col"><%= cart_item.amount %> 個</p>
+              <div class="col">
               <%= form_with model: @cart_item, url: cart_item_path(cart_item), method: :patch, local: true do |f| %>
-                <%= f.select :amount, [*1..10] %>
+                <%= f.select :amount, [*1..10], class: "form-control" %>
                 <%= f.submit '変更', class: "btn btn-success" %>
-              <% end %>  
+              <% end %> 
+              </div>
             </td>
             <td class="col-xs-2">
-              <%= ((cart_item.item.price * 1.1).floor * (cart_item.amount).to_i).to_s(:delimited) %>
+              <%= ((cart_item.item.price * 1.1).floor * (cart_item.amount).to_i).to_s(:delimited) %>円
             </td>
-            <td class="col-xs-2">
+            <td class="col-xs-1 text-center">
               <%= link_to '削除する', cart_item_path(cart_item), method: :delete, class: 'btn btn-danger' %>
             </td>
           </tr>
@@ -53,7 +56,7 @@
         <tr>
           <td class="table-secondary"><strong>合計金額</strong></td>
           <td>
-            <%= @total_price.to_s(:delimited) %>
+            <%= @total_price.to_s(:delimited) %>円
           </td>
         </tr>
       </table>
