@@ -16,12 +16,19 @@ class Admin::CustomersController < ApplicationController
   def update
     @customer = Customer.find(params[:id])
     if @customer.update(customer_params)
-      flash[:success] = '会員情報の更新に成功しました！'
-      redirect_to admin_customer_path(@customer)
-    else
+      if @customer.is_active == "有効"
+        @customer.update(is_valid: true)
+        flash[:success] = '会員情報の更新に成功しました！'
+        redirect_to admin_customer_path(@customer)
+      elsif @customer.is_active == "退会"
+        @customer.update(is_valid: false)
+        flash[:success] = '会員情報の更新に成功しました！'
+        redirect_to admin_customer_path(@customer)
+      end  
+    else  
       flash[:danger] = '内容に不備があります！'
       render :edit
-    end  
+    end
   end
   
   # 会員情報の更新ストロングパラメータ

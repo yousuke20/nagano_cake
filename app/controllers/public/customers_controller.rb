@@ -26,7 +26,7 @@ class Public::CustomersController < ApplicationController
    # ユーザーの退会処理（論理削除） 物理削除ではないため、pacthを用いてupdateする
    def destroy
    #  is_activeを2にし、「有効」から「退会」へ変える
-     current_customer.update(is_active: 2)
+     current_customer.update(is_active: 2, is_valid: false)
    # ログアウトさせ、sessionデータをリセットする
      reset_session
      flash[:success] = '退会処理が完了しました！'

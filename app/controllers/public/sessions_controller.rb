@@ -2,6 +2,8 @@
 
 class Public::SessionsController < Devise::SessionsController
   # before_action :configure_sign_in_params, only: [:create]
+  before_action :reject_inactive_customer, only: [:create]
+  
   include Accessible
   skip_before_action :check_user, only: :destroy
   # GET /resource/sign_in
@@ -25,5 +27,15 @@ class Public::SessionsController < Devise::SessionsController
   # def configure_sign_in_params
   #   devise_parameter_sanitizer.permit(:sign_in, keys: [:attribute])
   # end
+  
+  def reject_inactive_customer
+    @customer = Customer.find_by(email: params[:customer][:email])
+    if @customer
+      if @customer.valid_password?(params[:customer][:password]) && !@customer.is_valid
+        flash[:danger] = 'すでに退会しています'
+        redirect_to new_customer_session_path
+      end
+    end
+  end
   
 end
